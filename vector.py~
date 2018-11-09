@@ -1,0 +1,351 @@
+# -*- coding: utf-8 -*-
+# python2.7 and python3 compatible
+import math, pprint, random
+
+
+class Vector():
+    """Cutomized magic vector class. ***DON'T use setters in Python2!*** Much commented.
+                 ^^^^^
+                see in comments to __func__() functions."""
+
+    
+    def __init__(self, x, y):
+        "Call: Vector(x, y)."
+        self.x = float(x)
+        self.y = float(y)
+
+    def __del__(self):
+        del self.x
+        del self.y
+
+    def __repr__(self):
+        return 'Vector ({0}, {1}).'.format(self.x, self.y)
+
+    def __str__(self):
+        return '2D vector with x = {0}, y = {1},\n length = {2} and angle = {3} * Pi.'\
+               .format(self.x, self.y, self.length, self.angle / math.pi)
+    
+    def get_string(self):
+        return '2D vector with x = {0}, y = {1},\n length = {2} and angle = {3} * Pi.'\
+               .format(self.x, self.y, self.length, self.angle / math.pi)
+            
+    def get_tuple(self):
+        return (self.x, self.y)
+    
+    def get_int_tuple(self):
+        return (int(self.x), int(self.y))
+
+    def print_string(self):
+        pprint.pprint(self)
+    
+
+    
+    def copy(self):
+        "Return copy."
+        return Vector(self.x, self.y)
+
+    def __neg__(self):
+        "Return inverted instance using '-'."
+        return Vector(-self.x, -self.y)    
+
+    def __invert__(self):
+        "Invert using '~'."
+        self.x = -self.x
+        self.y = -self.y
+        return self
+
+    def __or__(self, length = 1):
+        "Scale to specified length using '|'."
+        l = self.length
+        if ( l != 0 ):
+            self.x *= (length / l)
+            self.y *= (length / l)
+        else:
+            # ORT_X = Vector(1, 0) # right
+            self.x = length # self = (ORT_X * length); hm...
+        return self
+
+    def increase(self, number):
+        "Increase ('+') the vector length by the number."
+        self | (self.length + number)
+        return self
+
+    def decrease(self, number):
+        "Decrease ('-') the vector length by the number."
+        self | (self.length - number)
+        return self
+
+    def __iadd__(self, other):
+        "Add other vector using '+='."
+        self.x += other.x
+        self.y += other.y
+        return self
+
+    def __isub__(self, other):
+        "Subtract other vector using '-='."
+        self.x -= other.x
+        self.y -= other.y
+        return self
+
+    def __imul__(self, number):
+        "Multiply by number using '*='."
+        self.x *= number
+        self.y *= number
+        return self
+
+    def __idiv__(self, number):
+        "Divide by number using '/='."
+        self.x *= 1 / number
+        self.y *= 1 / number
+        return self
+
+    def __ixor__(self, theta):
+        "Set specified angle ('^=') to this vector."
+        x = self.length * math.cos(theta)
+        y = math.sqrt(abs(self.qlength - x * x))
+        if ( self.qlength - x * x < 0 ):
+            print('Suspected equation in Vector.__ixor__')
+        if theta > 0:
+            y = -y
+        self.x = x
+        self.y = y
+        return self
+    
+    def __imod__(self, matrix):
+        "Multiply ('%=') every coordinate by matrix index"
+        self.x *= matrix[0]
+        self.y *= matrix[1]
+        return self
+
+    def rotate(self, angle):
+        "Rotate by the angle."
+        self ^= self.angle + angle
+        return self
+
+    def zero(self):
+        self.x = 0
+        self.y = 0
+        return self
+
+
+    def __eq__(self, other):
+        "If equals ('==')."
+        return ( (self.x == other.x) and (self.y == other.y) )
+
+    def __ne__(self, other):
+        "If not equals ('!=')."
+        return ( (self.x != other.x) or (self.y != other.y) )
+
+    def __lt__(self, other):
+        "Compare lengths using '<'."
+        return ( self.length < other.length )
+
+    def __le__(self, other):
+        "Compare lengths using '<='."
+        return ( self.length <= other.length )
+
+    def __gt__(self, other):
+        "Compare lengths using '>'."
+        return ( self.length > other.length )
+
+    def __gr__(self, other):
+        "Compare lengths using '>='."
+        return ( self.length >= other.length )
+    
+
+    def __eq__(self, number):
+        "If equals ('==')."
+        return ( self.length == number )
+
+    def __ne__(self, number):
+        "If not equals ('!=')."
+        return ( self.length != number )
+                 
+    def __lt__(self, number):
+        "Compare lengths using '<'."
+        return ( self.length < number )
+
+    def __le__(self, number):
+        "Compare lengths using '<='."
+        return ( self.length <= number )
+
+    def __gt__(self, number):
+        "Compare lengths using '>'."
+        return ( self.length > number )
+
+    def __gr__(self, number):
+        "Compare lengths using '>='."
+        return ( self.length >= number )
+    
+
+    def increased(self, number):
+        "Return the vector with length increased ('+') by the number."
+        v = self.copy()
+        v | (self.length + number)
+        return v
+
+    def decreased(self, number):
+        "Return the vector with length decreased ('-') by the number."
+        v = self.copy()
+        v | (self.length - number)
+        return v
+    
+
+    def __add__(self, other):
+        "Return sum ('+') of the two vectors."
+        return Vector(self.x + other.x, self.y + other.y)
+
+    def __sub__(self, other):
+        "Return difference ('-') between the two vectors."
+        return Vector(self.x - other.x, self.y - other.y)
+
+    def __mul__(self, number):
+       "Return this vector multiplied ('*') by the number."
+       return Vector(number * self.x, number * self.y)
+
+    def __rmul__(self, number):
+       "Return this vector multiplied ('*') by the number."
+       return Vector(number * self.x, number * self.y)
+
+    def __div__(self, number):
+        "Return this vector divided ('/') by the number."
+        return Vector(self.x * 1.0 / number, self.y * 1.0 / number)
+
+    def __pow__(self, other):
+        "Return scalar product ('**') of the two vectors."
+        return (self.x * other.x + self.y * other.y)
+
+    def __lshift__(self, length = 1):
+        "Return left normal ('<<') with specified length (deault: 1)."
+        return (Vector(-self.y, self.x) | length)
+
+    def __rshift__(self, length = 1):
+        "Return right normal ('>>') with specified length (default: 1import )."
+        return (Vector(self.y, -self.x) | length)
+
+    def __xor__(self, other):
+        "Return angle in radians('^') from the first vector to the second vector."
+        return (self.angle - other.angle)
+
+    def __mod__(self, matrix):
+        "Return vector of the vector coordinates multiplied ('%') by matrix indexes."
+        return Vector(self.x * matrix[0], self.y * matrix[1])
+
+    def __and__(self, other):
+        "Return abs() of vector product ('&') of the two vectors."
+        return (self.x * other.y - self.y * other.x)
+
+    def rotated(self, angle):
+        "Return the vector rotated by the angle."
+        return self.copy().rotate(angle)
+
+    def reflected(self, other):
+        "Return the vector reflected relatively to the other vector."
+        return self.rotated(- 2 * (self ^ other))
+
+### properties
+    @property
+    def length(self):
+        return math.hypot(self.x, self.y)
+
+    @property
+    def qlength(self):
+        "Squared length."
+        return (self.x * self.x + self.y * self.y)
+
+    @property
+    def angle(self):
+        "Angle measured anticlockwise."
+        if self.length == 0:
+            angle = 0.0 # the next algorithm find the string
+##            with open('vector.py', 'r') as the_file:
+##                the_code = the_file.readlines()
+##            res_line = 0
+##            for line in the_code:
+##                if 'angle = 0.0 # the next algorithm find the string' in line:
+##                    res_line = the_code.index(line)                
+##            print('Found angle of 0-vector!')
+##            print('File "/home/vanfed/Documents/Pythons/python2.7/vector.py",\
+##                        line {}, in angle:'.format(res_line - 4)) # - 4 is a crutch
+##            print(' '* 4 + '@property\n' + ' ' * 4 + 'def angle(self): ...')
+##            del the_code
+##            del res_line
+        else:
+            ORT_X = Vector(1, 0) # right
+            angle = math.acos(self ** ORT_X / self.length)
+            if self.y > 0:
+                angle = -angle
+        return angle
+
+### setters DO NOT work in Python2, JUST in Python3!!!  
+    @length.setter
+    def length(self, new_length):
+        l = self.length
+        if ( l != 0 ):
+            self.x *= (new_length / l)
+            self.y *= (new_length / l)
+        else:
+            # ORT_X = Vector(1, 0) # right
+            self.x = new_length # self = (ORT_X * length); hm...
+        return self
+    
+    @qlength.setter
+    def qlength(self, new_qlength):
+        ql = self.qlength
+        if ( ql != 0 ):
+            self.x *= math.sqrt(new_qlength / ql)
+            self.y *= math.sqrt(new_qlength / ql)
+        else:
+            # ORT_X = Vector(1, 0) # right
+            self.x = new_length # self = (ORT_X * length); hm...
+        return self
+
+    @angle.setter
+    def angle(self, new_angle):
+        x = self.length * math.cos(new_angle)
+        y = math.sqrt(abs(self.qlength - x * x))
+        if ( self.qlength - x * x < 0 ):
+            print('Suspected equation in Vector.angle()(setter)')
+        if theta > 0:
+            y = -y
+        self.x = x
+        self.y = y
+        return self
+    
+### additional funcs
+    def display(self, surf, colour = (0, 0, 255), x = None, y = None, width = 2):
+        import pygame
+        if x == None:
+            x = surf.get_width() // 2
+        if y == None:
+            x = surf.get_height() // 2
+        pygame.draw.circle(surf, (255, 0, 0), (x, y), 2, 2)
+        pygame.draw.line(surf, colour, (x, y), (x + self.x, y + self.y), width)
+        pygame.display.update()
+## class end
+
+def cprint(*args): # Y
+    print(args)
+
+def newZeroVector():
+    return Vector(0, 0)
+
+def newRandomVector(a = 10, b = 10):
+    return Vector(a * (2 * random.random() - 1), b * (2 * random.random() - 1))
+###############################################################################
+#__all__ = ()
+###############################################################################
+ORT_X = Vector(1, 0) # right
+ORT_Y = Vector(0, 1) # down
+##import pygame, sys
+##from pygame.locals import *
+##pygame.init()
+##DISPLAYSURF = pygame.display.set_mode((600, 500), 0, 32)
+##pygame.display.set_caption('Vectors')
+##while True:
+##    for event in pygame.event.get():
+##        if event.type == QUIT:
+##            pygame.quit()
+##           sys.exit
+##    pygame.display.update()
+

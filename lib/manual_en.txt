@@ -1,0 +1,23 @@
+"A"rrow ― switch to arrow control
+"C"ancel ― discard the current goal
+"E"nemy ― create new enemy ship
+"F"ollow ― follow the goal
+"G"oal ― set a goal (or change to the next)
+"H"unt ― hunt the goal
+"P"ause ― pause and menu
+"S"top ― stop
+"T"argeting ― on/off autoturn to the goal (if there is no goal ― in the direction of motion)
+"O"pen fire —― open fire
+
+Esc ― if menu is opened ― close menu, else close game
+Tab ― shoot
+Shift (right) ― fly in the direction
+Ctrl (right) ― get slower
+Space or Menu ― pause and menu
+
+Arrows operate accordingly.
+
+Mouse control:
+left button ― fly to the cursor;
+right button ― turn to the cursor;
+middle button (both) ― additional (+).

@@ -1,0 +1,659 @@
+# -*- coding: utf-8 -*-
+# python2.7.12 compatible
+
+import random, time, sys, pygame, math # you should 'pip' pygame ('$ pip install pygame')
+from pygame.locals import *
+from vector import *
+
+# constants {
+
+    # window
+FPS = 25
+GAME_ICON_IMAGE = pygame.image.load('/home/vanfed/Pictures/space_game/gameicon.png')
+WINDOW_WIDTH = 1350
+WINDOW_HEIGHT = 700
+HALF_WINDOW_WIDTH = int(WINDOW_WIDTH / 2)
+HALF_WINDOW_HEIGHT = int(WINDOW_HEIGHT / 2)
+## CAMERA_SLACK = min(WINDOW_WIDTH, WINDOW_HEIGHT) // 5
+
+    # color =      (  R,   G,   B) -- red : green : blue
+BACKGROUND_COLOR = (  0,   0,   0)
+WHITE =            (255, 255, 255)
+GREY =             ( 64,  64,  64)
+RED =              (255,   0,   0)
+LIGHT_RED =        (128,   0,   0)
+FADED_RED =        ( 64,   0,   0)
+GREEN =            (  0, 255,   0)
+
+    # shell 
+SHELL_GREEN_ROCKET_IMAGE = pygame.image.load('/home/vanfed/Pictures/space_game/green_rocket.png')
+SHELL_RED_ROCKET_IMAGE = pygame.image.load('/home/vanfed/Pictures/space_game/red_rocket.png')
+SHELL_Y_ROCKET_IMAGE = pygame.image.load('/home/vanfed/Pictures/space_game/Y_rocket.png')
+SHELL_STANDARD_ROCKET_IMAGE = pygame.image.load('/home/vanfed/Pictures/space_game/rocket_shell.png')
+
+    # player
+PLAYER_IMAGE = pygame.image.load('/home/vanfed/Pictures/space_game/Craft.png')
+PLAYER_SIZE = (75, 75)
+PLAYER_START_HEALTH = 100
+PLAYER_FIRE_PERIOD = 1
+ARROW_ACCELERATION = 2
+PLAYER_MAX_SPEED = 50
+
+    # enemy
+ENEMY_IMAGE = pygame.image.load('/home/vanfed/Pictures/space_game/Fighter1.png')
+ENEMY_SIZE = (75, 75)
+ENEMY_START_HEALTH = 10
+ENEMY_FIRE_PERIOD = 0.5#10
+ENEMY_MAX_ACCELERATION = 1
+ENEMY_MAX_SPEED = 40
+
+    # star
+STAR_IMAGE = pygame.image.load('/home/vanfed/Pictures/space_game/star.png')
+STAR_DENSITY = 80
+# }
+
+def main():
+    "Main outer function for the game."
+    global FPS_CLOCK, DISPLAY_SURFACE, BASICFONT, STAR_IMAGES
+
+    pygame.init()
+    FPS_CLOCK = pygame.time.Clock()
+    pygame.display.set_icon(GAME_ICON_IMAGE)
+    DISPLAY_SURFACE = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+    pygame.display.set_caption('Space Combat')
+    BASICFONT = pygame.font.Font('freesansbold.ttf', 32)
+
+    STAR_IMAGES = []
+    for i in range(1, 5):
+        STAR_IMAGES.append( pygame.transform.smoothscale(STAR_IMAGE, (5 * i, 5 * i)) )
+    while True:
+        runGame()
+
+def runGame():
+    "Function for game iterations."
+
+    # camera.x and camera.y are the top left of where the camera view is
+    camera = Vector(0, 0)
+    
+    mouse_control = False # player motion control type
+    mouse_steering = False
+    
+    global time, shells, stars, enemies, player
+    time = time.time()
+    shells, stars, enemies = [], [], []
+
+    player = new_player(radii_vector = Vector(HALF_WINDOW_WIDTH, HALF_WINDOW_HEIGHT))
+    
+    new_enemy(radii_vector = Vector(random.randint(0, WINDOW_WIDTH), random.randint(0, WINDOW_HEIGHT)))
+    enemies[-1].goal = player
+    enemies[-1].shooting = True
+    
+    player.goal = enemies[-1]
+
+    # start off with some random star images on the screen
+    for i in range(10):
+        new_star(camera, place = 'in')
+        
+###VVVVVVVVVVV##
+    while True: # main game loop
+        
+        # updating
+        time = time.time()
+        for shell in shells:
+            shell.update()
+        
+        for enemy in enemies: 
+            enemy.update()
+
+        player.update()
+        if mouse_control:
+            x, y = pygame.mouse.get_pos()
+            player.a ^= Vector(x - HALF_WINDOW_WIDTH, y - HALF_WINDOW_HEIGHT).angle
+        if mouse_steering:
+            x, y = pygame.mouse.get_pos()
+            player.angle = Vector(x - HALF_WINDOW_WIDTH, y - HALF_WINDOW_HEIGHT).angle
+        
+        # go through all the stars (objects) and see if any need to be deleted
+        for i in range(len(stars) - 1, -1, -1):
+            if is_outside_active_area(camera, stars[i]):
+                del stars[i]
+        
+        # add more stars (objects) if we don't have enough
+        while len(stars) < STAR_DENSITY:
+            new_star(camera)
+
+        # adjust camera if beyond the "camera slack" circle
+        screen_center = Vector(camera.x + HALF_WINDOW_WIDTH, camera.y + HALF_WINDOW_HEIGHT) # screen center vector
+        local_position =  player.center_r - screen_center # vector from the screen center to the  center of player's ship
+##        if ( local_position > CAMERA_SLACK + 0 ):
+##            camera += local_position.decreased(CAMERA_SLACK)
+        camera += local_position
+
+        # drawing
+            # draw background
+        DISPLAY_SURFACE.fill(BACKGROUND_COLOR)
+
+            # draw stars
+        for star in stars:
+            star.draw(DISPLAY_SURFACE, camera)
+
+            # draw shells
+        for shell in shells:
+            shell.draw(DISPLAY_SURFACE, camera)
+
+            # draw enemies
+        for enemy in enemies:
+            enemy.draw(DISPLAY_SURFACE, camera)
+
+            # draw player
+        player.draw(DISPLAY_SURFACE, camera)
+        
+            # draw map
+        draw_map(DISPLAY_SURFACE, camera)
+##        out_rect = pygame.Rect(int(player.r.x) - camera.x, |
+##                               int(player.r.y) - camera.y, |
+##                               player.width,               | mesh for blackhole
+##                               player.height)              |
+##        DISPLAY_SURFACE.blit(player.image, out_rect)       |
+
+        # draw BAD health meter TODO: make nicer
+        player.draw_health_meter()
+        
+        
+        
+        # event handling loop
+        for event in pygame.event.get():
+            
+            if ( event.type == QUIT or (event.type == KEYUP and event.key == K_ESCAPE) ):
+                terminate()
+
+            elif ( event.type == KEYDOWN ):
+                if ( event.key in (K_UP,
+                                   K_DOWN,
+                                   K_LEFT,
+                                   K_RIGHT,
+                                   K_RSHIFT,
+                                   K_RCTRL) ):
+                    player.a | ARROW_ACCELERATION
+                    player.mode = 'arrow'
+                if ( event.key == K_UP ):
+                    player.a ^= math.pi / 2
+                elif ( event.key == K_DOWN ):
+                    player.a ^= - math.pi / 2
+                elif ( event.key == K_LEFT ):
+                    player.a ^= math.pi
+                elif ( event.key == K_RIGHT ):
+                    player.a ^= 0
+                elif ( event.key == K_RSHIFT ):
+                    player.a ^= player.angle
+                elif ( event.key == K_RCTRL ):
+                    player.stop()
+                elif ( event.key == K_TAB ):
+                    player.shooting = True
+
+            elif ( event.type == KEYUP ):
+                if ( player.mode == 'arrow' and
+                     event.key in (K_UP,
+                                   K_DOWN,
+                                   K_LEFT,
+                                   K_RIGHT,
+                                   K_RSHIFT,
+                                   K_RCTRL) ):
+                    player.a | 0
+                elif ( event.key == K_TAB ):
+                    player.shooting = False
+                elif ( event.key == K_f ):
+                    player.mode = 'follow'
+                elif ( event.key == K_a ):
+                    player.mode = 'arrow'
+                elif ( event.key == K_h ):
+                    player.mode = 'hunt'
+                elif ( event.key == K_s ):
+                    player.mode = 'stop'
+                elif ( event.key == K_g ):
+                    player.goal = enemies[-1]
+                elif ( event.key == K_c ):
+                    player.goal = None
+                elif ( event.key == K_t ):
+                    player.targeting = not player.targeting
+            
+            elif ( event.type == MOUSEBUTTONDOWN ):
+                x, y = event.pos
+                if ( event.button == 1 ):
+                    player.a | ARROW_ACCELERATION
+                    player.a ^= Vector(x - HALF_WINDOW_WIDTH, y - HALF_WINDOW_HEIGHT).angle
+                    mouse_control = True
+                elif ( event.button == 2 ):
+                    outprint("Hello, player!", x - HALF_WINDOW_WIDTH, y - HALF_WINDOW_HEIGHT)
+                elif ( event.button == 3 ):
+                    player.angle = Vector(x - HALF_WINDOW_WIDTH, y - HALF_WINDOW_HEIGHT).angle
+                    mouse_steering = True
+                    last_targeting = player.targeting
+                    player.targeting = False
+                    
+            elif ( event.type == MOUSEBUTTONUP ):
+                if ( event.button == 1 ):
+                    player.a | 0
+                    mouse_control = False
+                elif ( event.button == 3 ):
+                    mouse_steering = False
+                    player.targeting = last_targeting
+            
+            elif ( event.type == MOUSEMOTION ):
+                if mouse_control:
+                    x, y = event.pos
+                    player.a ^= Vector(x - HALF_WINDOW_WIDTH, y - HALF_WINDOW_HEIGHT).angle
+                if mouse_steering:
+                    x, y = event.pos
+                    player.angle = Vector(x - HALF_WINDOW_WIDTH, y - HALF_WINDOW_HEIGHT).angle
+
+        # check snapshots & others
+
+        pygame.display.update()
+        pygame.display.flip()
+        FPS_CLOCK.tick(FPS)
+###^^^^^^^^^^^##
+
+
+
+
+####class:#############################################################################################################################
+class Sprite:
+
+    def __init__(self, image, size, radii_vector = Vector(0, 0), angle = 0, velocity_vector = Vector(0, 0), acceleration_vector = Vector(0, 0), fire_period = -1, health = 1):
+        self.image = pygame.transform.smoothscale(image, size)
+        self.width, self.height = size
+        self.size = size
+        self.r = radii_vector
+        self.angle = angle
+        self.v = velocity_vector
+        self.a = acceleration_vector
+        self.fire_period = fire_period
+        self.last_fire = time
+        self.health = health
+        self.max_health = health
+        self.creation_time = time
+        self.shooting = False
+        self.shell = None
+
+        self.goal = None
+        self.targeting = True
+        self.mode = None
+        self.modes = {}
+        self.max_speed = None
+        self.max_acceleration = None
+
+    def update(self):
+        self.modes[self.mode]()
+        if ( 'finally' in self.modes.keys() ):
+            self.modes['finally']()
+        if ( (self.shooting) and (self.shell != None) and ('shoot' in self.modes) and (time - self.last_fire >= self.fire_period) ):
+            self.modes['shoot']()
+
+    def move(self):
+        "Move sprite with account of PLAYER_MAX_SPEED."
+        self.r += self.v
+        self.v += self.a
+        if ( self.max_speed > 0 and self.v > self.max_speed ):
+            self.v | self.max_speed
+        if ( self.targeting and (self.goal == None) and (self.v != 0) ):
+            self.angle = self.v.angle
+        if ( self.targeting and (self.goal != None) ) :
+            self.angle = (self.goal.center_r - self.center_r).angle
+
+    def follow(self, goal = None):
+        "Smart following the goal."
+        if ( goal == None ):
+            goal = self.goal
+        if ( goal != None ):
+            to_goal = goal.center_r - self.center_r
+
+            K1 = 10 ** (-3) # | \\ (k)coefficients
+            K2 = 10 ** (15) # | picked constants
+            D1 = 2 / 3      # | using analogy of two forces: attracive and repulsive
+            D2 = -7         # | \\ degrees
+            
+            if (to_goal <> 0.0):
+                self.a = to_goal * ( (K1 * (to_goal.length ** D1)) - (K2 * (to_goal.length ** D2)) ) # steering equation
+            else:
+                self.a | self.max_acceleration
+            if (False or self.a > self.max_acceleration):
+                self.a | self.max_acceleration
+            if ( (to_goal < 1.5 * (goal.max_size + self.max_size)) and (self.v ^ to_goal < math.pi / 12) ):
+                self.a = to_goal >> self.max_acceleration # deviation
+            if self.targeting:
+                self.angle = to_goal.angle
+        
+    def hunt(self, goal = None):
+        if ( goal == None ):
+            goal = self.goal
+        if ( goal != None ):
+            to_goal = goal.center_r - self.center_r
+            self.a = to_goal
+            self.a | (self.max_acceleration)
+            if self.targeting:
+                self.angle = to_goal.angle
+
+    def stop(self):
+        self.a = -self.v
+        if ( self.a > self.max_acceleration ):
+            self.a | self.max_acceleration
+
+    def shoot(self):
+        shell_velocity = Vector(0, shell_types[self.shell]['max_speed'])
+        shell_velocity ^= self.angle
+        Shell(self, self.shell, shell_types[self.shell]['size'], self.center_r.copy(), self.angle, shell_velocity, Vector(0, 0), shell_types[self.shell]['lifetime'], shell_types[self.shell]['damage'])
+        self.last_fire = time
+######################### from Java
+    def runningTime(self):
+        target = self.goal
+        weaponSpeed = shell_types[self.shell]['max_speed']
+        d = target.center_r - self.center_r
+        vX = target.v.x
+        vY = target.v.y
+        try:
+            t1 = (-vX*d.x-vY*d.y+math.sqrt((vX*d.x+vY*d.y)*(vX*d.x+vY*d.y)-d.qlength*(target.v.qlength-weaponSpeed*weaponSpeed)))/(target.v.qlength-weaponSpeed*weaponSpeed)
+            t2 = (-vX*d.x-vY*d.y-math.sqrt((vX*d.x+vY*d.y)*(vX*d.x+vY*d.y)-d.qlength*(target.v.qlength-weaponSpeed*weaponSpeed)))/(target.v.qlength-weaponSpeed*weaponSpeed)
+        except (ValueError):
+            t1 = t2 = 0
+        if ( (t2>0) and (t1>0) ):
+            time=min(t1, t2)
+        else:
+            time=max(t1, t2)
+        return time
+    
+    def shoot_feetforward(self):
+        if ( self.goal != None ):
+            
+            target = self.goal
+            d = target.center_r - self.center_r
+            angle=d.angle+((d+(self.runningTime()*target.v)) ^ d)
+            
+            shell_velocity = Vector(0, shell_types[self.shell]['max_speed'])
+            shell_velocity ^= angle
+            Shell(self, self.shell, shell_types[self.shell]['size'], self.center_r.copy(), self.angle, shell_velocity, Vector(0, 0), shell_types[self.shell]['lifetime'], shell_types[self.shell]['damage'])
+            self.last_fire = time
+#########################
+            
+    def __shoot_feetforward_(self): # FIXME: correct algorithm -- work pretty awful
+        if ( self.goal != None ):
+            shell_velocity = Vector(0, shell_types[self.shell]['max_speed'])
+            to_goal = self.goal.center_r - self.center_r
+             # to shoot feetforward:
+            feetforward_sin = math.sin(math.pi - (self.v ^ to_goal)) * self.goal.v.length / shell_velocity.length
+            if ( abs(feetforward_sin) <= 1 ):
+                feetforward_angle = math.asin(feetforward_sin)
+            else:
+                feetforward_angle = 0
+                cprint("Wrong argument! sin(angle) = {}".format(feetforward_sin))
+            
+            shell_velocity ^= feetforward_angle + to_goal.angle
+            outprint("Angles: {1}*pi + {0}*pi = {2}*pi".format(feetforward_angle/math.pi, to_goal.angle/math.pi, shell_velocity.angle/math.pi))
+            Shell(self, self.shell, shell_types[self.shell]['size'], self.center_r.copy(), self.angle, shell_velocity, Vector(0, 0), shell_types[self.shell]['lifetime'], shell_types[self.shell]['damage'])
+            self.last_fire = time
+
+    def draw(self, display_surface, camera_position):
+        rotated_image = pygame.transform.rotate(self.image, 180/math.pi * self.angle)
+        out_rect = rotated_image.get_rect()
+        out_rect.center = (self.center_r - camera_position).get_tuple()
+        display_surface.blit(rotated_image, out_rect)
+
+    @property
+    def center_r(self):
+        center_r = self.r + Vector(self.width // 2, self.height // 2) 
+        return center_r
+
+    @property
+    def max_size(self):
+        "Return max of sprite's width and height."
+        return max(self.width, self.height)
+    
+    @property
+    def hypot(self):
+        "Return hypot of sprite's width and height."
+        return math.hypot(self.width, self.height)
+
+    def draw_health_meter(self):
+        "Display health of specified sprite with RED column in the left side of Visible screen."
+        for i in range(self.health): # draw red health bars
+            pygame.draw.rect(DISPLAY_SURFACE, RED,   (15, 5 + (self.max_health) + i * 5, 20, 10))
+        for i in range(self.max_health): # draw the white outlines
+            pygame.draw.rect(DISPLAY_SURFACE, WHITE, (15, 5 + (self.max_health) + i * 5, 20, 10), 1)
+
+####class:##############################################################################################################################
+class Shell:
+
+    global shell_types, shells # TODO: add laser
+    shell_types = { SHELL_GREEN_ROCKET_IMAGE:    {"damage": 5,  "max_speed": 30,  "size": (59 ,10), "lifetime": 15}, 
+                    SHELL_RED_ROCKET_IMAGE:      {"damage": 5,  "max_speed": 30,  "size": (63 ,10), "lifetime": 10},
+                    SHELL_Y_ROCKET_IMAGE:        {"damage": 15, "max_speed": 25,  "size": (59 ,10), "lifetime": 20},
+                    SHELL_STANDARD_ROCKET_IMAGE: {"damage": 3,  "max_speed": 50,  "size": (53 ,11), "lifetime": 5 },
+##                    SHELL_GREEN_BLASTER:         {"damage": 1,  "max_speed": 100, "size": (-0, -0), "lifetime": 2 },
+##                    SHELL_RED_BLASTER:           {"damage": 1,  "max_speed": 100, "size": (-0, -0), "lifetime": 2 }
+                     }
+    shells = []
+    
+    def __init__(self, owner, image, size, radii_vector = Vector(0, 0), angle = 0, velocity_vector = Vector(0, 0), acceleration_vector = Vector(0, 0), damage = 0, duration = -1):
+        self.owner = owner
+        self.image = pygame.transform.smoothscale(image, size)
+        self.width, self.height = self.image.get_width(), self.image.get_height()
+        self.r = radii_vector
+        self.angle = angle
+        self.v = velocity_vector
+        self.a = acceleration_vector
+        self.damage = damage
+        self.duration = duration
+        self.creation_time = time
+        
+        shells.append(self)
+
+    def update(self):
+        if ( self.duration > time - self.creation_time ):
+            self.move()
+        else:
+            shells.remove(self)
+            del self
+
+    def move(self):
+        "Move shell."
+        self.r += self.v
+        self.v += self.a
+        self.angle = self.v.angle
+
+    def draw(self, display_surface, camera_position):
+        rotated_image = pygame.transform.rotate(self.image, 180/math.pi * self.angle)
+        out_rect = rotated_image.get_rect()
+        out_rect.center = (self.center_r - camera_position).get_tuple()
+        display_surface.blit(rotated_image, out_rect)
+
+    @property
+    def center_r(self):
+        center = Vector( int(self.r.x + self.width / 2), int(self.r.y + self.height / 2))
+        return center
+
+    @property
+    def max_size(self):
+        "Return max of sprite's width and height."
+        return max(self.width, self.height)
+    
+    @property
+    def hypot(self):
+        "Return hypot of sprite's width and height."
+        return math.hypot(self.width, self.height)
+
+####class:##############################################################################################################################
+
+class Star:
+
+    global stars
+    stars = []
+
+    def __init__(self, radii_vector = Vector(0, 0), angle = 0):
+        self.image = STAR_IMAGES[random.randint(0, len(STAR_IMAGES) - 1)]
+        self.width  = self.image.get_width()
+        self.height = self.image.get_height()
+
+        self.rect = None
+        
+        stars.append(self)
+
+    def draw(self, display_surface, camera_position):
+        out_rect = self.image.get_rect()
+        out_rect.center = (self.r - camera_position).get_tuple()
+        display_surface.blit(self.image, out_rect)
+
+####additional#functions:##############################################################################################################################
+
+    
+def new_enemy(image = ENEMY_IMAGE, size = ENEMY_SIZE, radii_vector = Vector(0, 0), angle = 0, velocity_vector = Vector(0, 0), acceleration_vector = Vector(0, 0), fire_period = ENEMY_FIRE_PERIOD, health = ENEMY_START_HEALTH):
+    "Create new ENEMY sprite."
+    enemy = Sprite(image, size, radii_vector, angle, velocity_vector, acceleration_vector, fire_period, health)
+    enemy.max_speed = ENEMY_MAX_SPEED
+    enemy.max_acceleration = ENEMY_MAX_ACCELERATION
+    enemy.shell = SHELL_RED_ROCKET_IMAGE
+    enemy.modes['shoot'] = enemy.shoot_feetforward
+    enemy.modes['follow'] = enemy.follow
+    enemy.modes['stop'] = enemy.stop
+    enemy.modes['finally'] = enemy.move
+    enemy.mode = 'follow'
+    
+    global enemies
+    enemies.append(enemy)
+    
+    return enemy
+
+def new_player(image = PLAYER_IMAGE, size = PLAYER_SIZE, radii_vector = Vector(0, 0), angle = 0, velocity_vector = Vector(0, 0), acceleration_vector = Vector(0, 0), fire_period = PLAYER_FIRE_PERIOD, health = PLAYER_START_HEALTH):
+    "Create new PLAYER sprite."
+    player = Sprite(image, size, radii_vector, angle, velocity_vector, acceleration_vector, fire_period, health)
+    player.max_speed = PLAYER_MAX_SPEED
+    player.max_acceleration = ARROW_ACCELERATION
+    player.shell = SHELL_GREEN_ROCKET_IMAGE
+    player.modes['shoot'] = player.shoot
+    player.modes['arrow'] = lambda: None
+    player.modes['follow'] = player.follow
+    player.modes['finally'] = player.move
+    player.modes['hunt'] = player.hunt
+    player.modes['stop'] = player.stop
+    player.mode = 'arrow'
+    return player
+
+def new_star(camera, place = 'out'): # place = 'in' / 'out' visible screen (but anyway in Active Area).
+    "Create new star in or out of the visible screen."
+    star = Star()
+    if ( place == 'out' ):
+        position = get_random_off_camera_position(camera, star)
+        star.r = Vector(position[0], position[1])
+    elif ( place == 'in' ):
+        position = get_random_in_camera_position(camera, star)
+        star.r = Vector(position[0], position[1])
+    star.rect = pygame.Rect( (star.r.x, star.r.y, star.width, star.height) )
+    return star
+
+def draw_map(display_surface, camera):# TODO: add-ate
+    "Draw map of Active Area, and other on border in TOP RIGHT corner. TR:[O]LL"
+    scale = 1.0/5  # could be changed
+    horizontal_size = int(WINDOW_WIDTH * scale)
+    vertical_size = int(WINDOW_HEIGHT * scale)
+    down_shift = 32 # '32' is (smth like) letter height # WINDOW_HEIGHT // 20 # could NOT be changed 
+    outprint("Map", HALF_WINDOW_WIDTH - horizontal_size // 2, 15 - HALF_WINDOW_HEIGHT, color = WHITE) # '15' is letter sensative constant
+    pygame.draw.rect(display_surface, GREY,\
+     pygame.Rect(WINDOW_WIDTH - horizontal_size, down_shift, horizontal_size, vertical_size), 1)
+    # outprint('.', HALF_WINDOW_WIDTH - horizontal_size // 2, vertical_size // 2 - HALF_WINDOW_HEIGHT + down_shift, color = GREEN)
+    screen_center = Vector(camera.x + HALF_WINDOW_WIDTH, camera.y + HALF_WINDOW_HEIGHT)
+    map_center = Vector(WINDOW_WIDTH - horizontal_size // 2, vertical_size // 2 + down_shift)
+    pygame.draw.circle(display_surface, GREEN, map_center.get_int_tuple(), 2)
+    for enemy in enemies:
+            to_enemy = enemy.center_r - screen_center
+            # if enemy in visible screen
+            if is_in_visible_screen(camera, enemy):
+                enemy_position = Vector(to_enemy.x * scale + map_center.x, to_enemy.y * scale + map_center.y)
+                pygame.draw.circle(display_surface, RED, enemy_position.get_int_tuple(), 2)
+            # if enemy out of visible screen
+            else:
+                # set (red) color tone with account of distance
+                if not is_outside_active_area(camera, enemy):
+                    red_tone = RED
+                elif ( is_outside_active_area(camera, enemy) and to_enemy.length < 5 * max(WINDOW_WIDTH, WINDOW_HEIGHT) ):
+                    red_tone = LIGHT_RED
+                else:
+                    red_tone = FADED_RED
+                angle = to_enemy.angle
+                w = horizontal_size // 2
+                h = vertical_size // 2
+                # draw point (enemy) on map rectangle border (4 cases)
+                if ( (math.sin(angle) != 0) and ((math.cos(angle) == 0) or (1.0*w/h >= abs(1.0/math.tan(angle)))) ):
+                    if ( abs(angle) == math.pi/2 ):
+                        x_shift = 0
+                    else:
+                        x_shift = h / math.tan(angle)
+                    if ( angle > 0 ):
+                        circle_position = ( int(map_center.x + x_shift), int(map_center.y - h) )
+                    else:
+                        circle_position = ( int(map_center.x - x_shift), int(map_center.y + h) )
+                else:
+                    y_shift = w * math.tan(angle)
+                    if ( math.cos(angle) > 0 ):
+                        circle_position = ( int(map_center.x + w), int(map_center.y - y_shift) )
+                    else:
+                        circle_position = ( int(map_center.x - w), int(map_center.y + y_shift) )       
+                pygame.draw.circle(display_surface, red_tone, circle_position, 2)
+
+def is_outside_active_area(camera, obj):
+    """Check whether object 'obj' is out of the Active Area.
+
+                    Active Area:
+    WINDOW_WIDTH    WINDOW_WIDTH    WINDOW_WIDTH |\\    
+    WINDOW_WIDTH    Visible screen  WINDOW_WIDTH |  } 3*WINDOW_HEIGHT    
+    WINDOW_WIDTH    WINDOW_WIDTH    WINDOW_WIDTH |/
+    """
+    # Return False if camera_x and camera_y are more than
+    # a half-window length beyond the edge of the window.
+    bounds_left_edge = camera.x - WINDOW_WIDTH
+    bounds_top_edge = camera.y - WINDOW_HEIGHT
+    bounds_rectangle = pygame.Rect(bounds_left_edge, bounds_top_edge, WINDOW_WIDTH * 3, WINDOW_HEIGHT * 3)
+    object_rectangle = pygame.Rect(obj.r.x, obj.r.y, obj.width, obj.height)
+    return not bounds_rectangle.colliderect(object_rectangle)
+
+def is_in_visible_screen(camera, obj):
+    "Check whether object 'obj' is in visible screen (probably, not entire)."
+    return ( (camera.x - obj.width < obj.r.x < camera.x + WINDOW_WIDTH) and\
+            (camera.y - obj.height < obj.r.y < camera.y + WINDOW_HEIGHT) )
+
+def get_random_off_camera_position(camera, obj):
+    "Return random x and y of postion out of visible screen but in Active Area."
+    # create a Rect of the camera view
+    camera_rectangle = pygame.Rect(camera.x, camera.y, WINDOW_WIDTH, WINDOW_HEIGHT)
+    while True:
+        x = random.randint( int(camera.x - WINDOW_WIDTH), int(camera.x + (2 * WINDOW_WIDTH)) )
+        y = random.randint( int(camera.y - WINDOW_HEIGHT), int(camera.y + (2 * WINDOW_HEIGHT)) )
+        # create a Rect object with the random coordinates and use colliderect()
+        # to make sure the right edge isn't in the camera view.
+        obj_rectangle = pygame.Rect(x, y, obj.width, obj.height)
+        if not obj_rectangle.colliderect(camera_rectangle):
+            return x, y
+
+def get_random_in_camera_position(camera, obj):
+    "Return random x and y of postion in the visible screen."
+    # create a Rect of the camera view
+    camera_rectangle = pygame.Rect(camera.x, camera.y, WINDOW_WIDTH, WINDOW_HEIGHT)
+    x = random.randint(camera.x, camera.x + WINDOW_WIDTH - obj.width)
+    y = random.randint(camera.y, camera.y + WINDOW_HEIGHT - obj.height)
+    return x, y
+
+def outprint(input_string, x = 0, y = 0, color = RED, font = None):
+    "Additional. Print input string in the center of Visible screen in RED."
+    if ( font == None ):
+        font = BASICFONT
+    printing_surface = font.render(input_string, True, color)
+    printing_rectangle = printing_surface.get_rect()
+    printing_rectangle.center = (x + HALF_WINDOW_WIDTH, y + HALF_WINDOW_HEIGHT)
+    DISPLAY_SURFACE.blit(printing_surface, printing_rectangle)
+
+def terminate():
+    "Stop the program."
+    pygame.quit()
+    sys.exit()
+
+
+if ( __name__ == '__main__' ):
+    main()

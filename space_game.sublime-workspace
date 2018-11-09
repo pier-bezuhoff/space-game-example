@@ -1,0 +1,1143 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"run",
+				"runState ∷ State s a → s → (a, s)\tExercise"
+			],
+			[
+				"K",
+				"Kleisli m\tKleisli"
+			],
+			[
+				"lo",
+				"load"
+			],
+			[
+				"get",
+				"get_text"
+			],
+			[
+				"dest",
+				"destroy"
+			],
+			[
+				"ene",
+				"enemy_names"
+			],
+			[
+				"en",
+				"enemies"
+			],
+			[
+				"pla",
+				"players"
+			],
+			[
+				"pl",
+				"player"
+			],
+			[
+				"ch",
+				"change_debug_mode"
+			],
+			[
+				"spri",
+				"sprites"
+			],
+			[
+				"spr",
+				"sprites"
+			],
+			[
+				"im",
+				"image_lib"
+			],
+			[
+				"image",
+				"image_lib"
+			],
+			[
+				"ima",
+				"image_path"
+			],
+			[
+				"sp",
+				"_sprites"
+			],
+			[
+				"dis",
+				"display_surface"
+			],
+			[
+				"dr",
+				"drawing"
+			],
+			[
+				"drawi",
+				"draw_list"
+			],
+			[
+				"sin",
+				"sin_beta"
+			],
+			[
+				"max",
+				"max_acceleration"
+			],
+			[
+				"to",
+				"to_goal"
+			],
+			[
+				"cen",
+				"center_r"
+			],
+			[
+				"re",
+				"resources"
+			],
+			[
+				"res",
+				"resources"
+			],
+			[
+				"p",
+				"planet"
+			],
+			[
+				"sel",
+				"selen"
+			],
+			[
+				"star",
+				"star_images"
+			],
+			[
+				"H",
+				"HOME_DIRECTORY"
+			],
+			[
+				"str",
+				"stripped"
+			],
+			[
+				"sub",
+				"subgroups"
+			],
+			[
+				"su",
+				"subgroup"
+			],
+			[
+				"he",
+				"headers"
+			],
+			[
+				"new",
+				"new_row"
+			],
+			[
+				"in",
+				"index"
+			],
+			[
+				"fb",
+				"fbssids"
+			],
+			[
+				"file",
+				"filename"
+			],
+			[
+				"cs",
+				"csv_table"
+			],
+			[
+				"old",
+				"old_position"
+			],
+			[
+				"las",
+				"last_menu_time"
+			],
+			[
+				"fo",
+				"for\tFor Loop"
+			],
+			[
+				"it",
+				"item_path"
+			],
+			[
+				"wi",
+				"with_length"
+			],
+			[
+				"fr",
+				"from_planet"
+			],
+			[
+				"map",
+				"map_center"
+			],
+			[
+				"rad",
+				"radii"
+			],
+			[
+				"dra",
+				"draw_all"
+			],
+			[
+				"S",
+				"Smart"
+			],
+			[
+				"ap",
+				"append"
+			],
+			[
+				"_",
+				"__\t__magic__"
+			],
+			[
+				"plan",
+				"planets"
+			],
+			[
+				"d",
+				"defs\tMethod"
+			],
+			[
+				"update",
+				"update_all"
+			],
+			[
+				"eff",
+				"effect"
+			],
+			[
+				"ef",
+				"effects"
+			],
+			[
+				"typ",
+				"type_name"
+			],
+			[
+				"min",
+				"min_size"
+			],
+			[
+				"cent",
+				"center_r-shell"
+			],
+			[
+				"she",
+				"shell"
+			],
+			[
+				"len",
+				"length"
+			],
+			[
+				"up",
+				"update_all"
+			],
+			[
+				"Spr",
+				"Sprite"
+			],
+			[
+				"goal",
+				"goal№"
+			],
+			[
+				"shoo",
+				"shooting"
+			],
+			[
+				"tar",
+				"targeting"
+			],
+			[
+				"cre",
+				"creation_time"
+			],
+			[
+				"max_",
+				"max_health"
+			],
+			[
+				"fi",
+				"fire_period"
+			],
+			[
+				"c",
+				"cos\tconstant string"
+			],
+			[
+				"para",
+				"parameter"
+			],
+			[
+				"par",
+				"parameter"
+			],
+			[
+				"pa",
+				"param_string"
+			],
+			[
+				"st",
+				"strip"
+			],
+			[
+				"inpu",
+				"input_text"
+			],
+			[
+				"a",
+				"angular_braces"
+			],
+			[
+				"r",
+				"round_braces"
+			],
+			[
+				"co",
+				"count"
+			],
+			[
+				"i",
+				"inc\t#include \"…\""
+			],
+			[
+				"inc",
+				"include"
+			],
+			[
+				"ite",
+				"item_path"
+			],
+			[
+				"item",
+				"item_path"
+			],
+			[
+				"get_",
+				"get_size"
+			],
+			[
+				"next",
+				"next_price"
+			],
+			[
+				"fit",
+				"fit_3"
+			],
+			[
+				"eva",
+				"eval_with_scale"
+			],
+			[
+				"arg",
+				"arg_list"
+			],
+			[
+				"ma",
+				"max_acceleration"
+			],
+			[
+				"spa",
+				"space_game"
+			],
+			[
+				"function",
+				"function_name"
+			],
+			[
+				"fu",
+				"function_name"
+			],
+			[
+				"e",
+				"enemies"
+			],
+			[
+				"acc",
+				"acceleration_vector"
+			],
+			[
+				"an",
+				"angle"
+			],
+			[
+				"sprite",
+				"sprite_type"
+			],
+			[
+				"E",
+				"ENEMY_IMAGE"
+			],
+			[
+				"PL",
+				"PLAYER_IMAGE"
+			],
+			[
+				"class",
+				"classmethod"
+			],
+			[
+				"local",
+				"local_time"
+			],
+			[
+				"h",
+				"health"
+			],
+			[
+				"sh",
+				"shell_type"
+			],
+			[
+				"shell",
+				"shell_type"
+			],
+			[
+				"ac",
+				"acceleration_vector"
+			],
+			[
+				"ve",
+				"velocity_vector"
+			],
+			[
+				"fearful",
+				"fearful_type"
+			],
+			[
+				"self",
+				"self"
+			],
+			[
+				"control",
+				"control_icon"
+			],
+			[
+				"s",
+				"stars"
+			],
+			[
+				"ca",
+				"camera_position"
+			],
+			[
+				"is",
+				"is_outside_active_area"
+			],
+			[
+				"if",
+				"ifmain\tif __name__ == '__main__'"
+			],
+			[
+				"la",
+				"label"
+			],
+			[
+				"g",
+				"geometry"
+			],
+			[
+				"op",
+				"option_menu"
+			],
+			[
+				"WI",
+				"WINDOW_WIDTH"
+			],
+			[
+				"di",
+				"directory"
+			],
+			[
+				"ls",
+				"lsdir"
+			],
+			[
+				"fil",
+				"files"
+			],
+			[
+				"start",
+				"start_time"
+			],
+			[
+				"set",
+				"set_fps"
+			],
+			[
+				"__",
+				"__set_"
+			],
+			[
+				"de",
+				"destroy"
+			],
+			[
+				"o",
+				"option_menu"
+			],
+			[
+				"W",
+				"WINDOW_WIDTH"
+			],
+			[
+				"el",
+				"element_name"
+			],
+			[
+				"add",
+				"add_command"
+			],
+			[
+				"ad",
+				"add_command"
+			],
+			[
+				"k",
+				"keys"
+			],
+			[
+				"WIN",
+				"WINDOW_HEIGHT"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/home/vanfed/Documents/Haskell/Kleisli.hs",
+			"settings":
+			{
+				"buffer_size": 1402,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/vanfed/Documents/Haskell/Exercise.hs",
+			"settings":
+			{
+				"buffer_size": 1028,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/vanfed/Documents/Python/universal/filesystem.py",
+			"settings":
+			{
+				"buffer_size": 38338,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "haskell",
+		"selected_items":
+		[
+			[
+				"haskell",
+				"SublimeHaskell: Check"
+			],
+			[
+				"",
+				"Cabal: List"
+			]
+		],
+		"width": 497.0
+	},
+	"console":
+	{
+		"height": 162.0,
+		"history":
+		[
+			"pygame.quit()",
+			"version()",
+			"import space_game as game",
+			"path.append('/home/vanfed/Documents/Pythons/space_game')",
+			"from sys import path",
+			"import space_game",
+			"1",
+			"for i in range(100):\\",
+			"for i in range(100):",
+			"from itertools import *",
+			"1",
+			"__dir__()",
+			"python"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/vanfed/Documents/Python/space_game/space_game.sublime-project",
+		"/home/vanfed/Documents/Python/universal/filesystem.py",
+		"/media/vanfed/persistence/rw/root/Documents/Scripts/reaver_ext.py",
+		"/home/vanfed/Desktop/csv_read.py",
+		"/home/vanfed/Desktop/airodump.out-01.csv",
+		"/home/vanfed/Desktop/crack-script-comments.sh",
+		"/home/vanfed/Desktop/reconnect-wi-fi.sh",
+		"/home/vanfed/Downloads/vigenere.in",
+		"/home/vanfed/Documents/Additional/Other/golly/gollyKKF/golly-2.6-gtk/Help/Binaries/List.lst",
+		"/home/vanfed/Desktop/dec.py",
+		"/media/vanfed/persistence/rw/root/.local/share/gvfs-metadata/uuid-150C-3B59",
+		"/home/vanfed/Desktop/tmp",
+		"/home/vanfed/Desktop/caesar.in.txt",
+		"/home/vanfed/.config/sublime-text-3/Packages/User/Default.sublime-theme",
+		"/home/vanfed/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/vanfed/.config/sublime-text-3/Local/Session.sublime_session",
+		"/home/vanfed/.config/sublime-text-3/Local/Auto Save Session.sublime_session",
+		"/home/vanfed/.config/sublime-text-3/Packages/User/python3.sublime-build",
+		"/home/vanfed/Documents/Pythons/python3.5/crypting.py",
+		"/opt/sublime_text/sublime_text",
+		"/home/vanfed/Desktop/input.txt",
+		"/home/vanfed/Desktop/__input__.txt",
+		"/home/vanfed/Desktop/output.txt",
+		"/home/vanfed/Desktop/_input.txt",
+		"/home/vanfed/Desktop/output_.txt",
+		"/home/vanfed/Documents/Pythons/space_game/menu.py",
+		"/home/vanfed/Documents/Pythons/space_game/classes.py",
+		"/home/vanfed/Documents/Pythons/space_game/space_game.py",
+		"/home/vanfed/Desktop/inputcp.txt",
+		"/home/vanfed/Documents/Pythons/universal/filesystem.py",
+		"/home/vanfed/Desktop/Program1.pas",
+		"/home/vanfed/Documents/Pythons/universal/usem.py",
+		"/home/vanfed/Documents/Pythons/universal/addo.py",
+		"/home/vanfed/Documents/Pascal & Lazarus/input.txt",
+		"/home/vanfed/Documents/Pythons/universal/additional.py",
+		"/home/vanfed/Documents/Pascal & Lazarus/crypting.pas",
+		"/home/vanfed/Documents/Pythons/Notes",
+		"/home/vanfed/Documents/Pythons/space_game/vector.py",
+		"/home/vanfed/Documents/Java/Java projects/SpaceGame_second_attempt/src/root/GamePanel.java",
+		"/home/vanfed/Documents/Pythons/python3.5/vk_bicycle.py",
+		"/usr/lib/i386-linux-gnu/gedit/plugins/quickopen/popup.py",
+		"/home/vanfed/Documents/C or C++/run_cpp.cpp",
+		"/home/vanfed/Documents/C or C++/self.cpp",
+		"/home/vanfed/Documents/C or C++/compilate.cpp",
+		"/home/vanfed/Documents/C or C++/__interactive_compilator_.cpp",
+		"/home/vanfed/Documents/C or C++/interactive_compilator.cpp",
+		"/home/vanfed/Documents/C or C++/cpp_ice.py",
+		"/home/vanfed/Documents/C or C++/<cppshell>.cpp",
+		"/home/vanfed/Documents/C or C++/itertools.cpp",
+		"/home/vanfed/Documents/C or C++/out.cpp",
+		"/home/vanfed/Documents/C or C++/test.cpp",
+		"/home/vanfed/Documents/Pythons/universal/wrappers.py",
+		"/home/vanfed/Desktop/spb_olimpiada.pas",
+		"/home/vanfed/Desktop/__spb_olimpiada_.pas",
+		"/home/vanfed/Desktop/README.txt",
+		"/home/vanfed/Documents/Pythons/universal/string.py",
+		"/home/vanfed/Documents/Pythons/space_game/lib/manual_ru_cp1252.txt",
+		"/home/vanfed/Documents/Pythons/space_game/to do",
+		"/home/vanfed/Documents/Pythons/space_game/lib/manual_ru.txt",
+		"/home/vanfed/Desktop/list.txt",
+		"/home/vanfed/Desktop/Spisok.txt",
+		"/home/vanfed/Downloads/manual_ru.txt",
+		"/home/vanfed/Documents/Pythons/space_game/lib/manual_ru_cp1251.txt",
+		"/home/vanfed/Documents/Pythons/space_game/readme.txt",
+		"/home/vanfed/Documents/Pythons/space_game/lib/manual_en.txt",
+		"/home/vanfed/Documents/Pythons/space_game/lib/manual_en_cp1251.txt",
+		"/home/vanfed/Documents/Pythons/space_game/lib/manual.txt",
+		"/home/vanfed/Documents/Pythons/universal/vector.py",
+		"/home/vanfed/Documents/Pythons/universal/vector.pyc",
+		"/home/vanfed/Documents/Pythons/space_game/example.py",
+		"/home/vanfed/Documents/Pythons/space_game/example2.py",
+		"/home/vanfed/Documents/Pythons/space_game/start_menu.py",
+		"/home/vanfed/Desktop/app.py",
+		"/home/vanfed/Documents/Pythons/Link to utils/filesystem.py",
+		"/media/vanfed/FC30-3DA9/Книги/Макс Фрай/Макс Фрай_Последовательность.txt",
+		"/home/vanfed/Documents/Pythons/space_game/vector.pyc",
+		"/home/vanfed/Desktop/Памятка рекламы.txt",
+		"/usr/lib/python3.5/posixpath.py",
+		"/home/vanfed/Documents/Pythons/python3.5/mathtask.py",
+		"/home/vanfed/Documents/Pythons/utilities/files.py",
+		"/home/vanfed/Desktop/experimental .txt",
+		"/home/vanfed/Documents/Pythons/utilities/__init__.py",
+		"/home/vanfed/Documents/Pythons/space_game/manu",
+		"/home/vanfed/Documents/Pythons/python2.7/space_game/vector.py",
+		"/home/vanfed/Documents/Pythons/python2.7/space_game/classes.py",
+		"/home/vanfed/Documents/Pythons/python2.7/space_game/manu.py",
+		"/home/vanfed/Documents/Pythons/python2.7/space_game/space_game.py",
+		"/home/vanfed/Documents/C or C++/math_task.cpp",
+		"/home/vanfed/Desktop/ssdfff",
+		"/home/vanfed/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
+		"/home/vanfed/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap"
+	],
+	"find":
+	{
+		"height": 27.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"heal",
+			"shell",
+			"'",
+			"'max speed'",
+			"IMAGE",
+			"\"image path\"",
+			"\"image\"",
+			"_IMAGE([^_])",
+			"\"red rocket\"",
+			"\"green rocket\"",
+			"\"fire period\"",
+			"\"max speed\"",
+			"\"max acceleration\"",
+			"ediv",
+			"^",
+			"math.",
+			"~",
+			"is_outside_active_area",
+			"is_in_visible_screen",
+			"def dr",
+			"home",
+			"/",
+			"'/'",
+			"'/",
+			"/",
+			"Python3",
+			"decrypting",
+			"\\`",
+			"^",
+			"next",
+			"del",
+			"def __del__",
+			"[\\!\\=]=\\s*None",
+			"destroy",
+			"def destroy",
+			"destroy",
+			"\\.do",
+			"K_RCTRL",
+			"def do",
+			"self.items",
+			"self.path",
+			"self.path[^\\w]",
+			"self.name([^\\w])",
+			"self.name",
+			"self.namr",
+			"self.path",
+			"@",
+			" @",
+			"@",
+			"(\\S)([\\+\\-\\=])(\\S)",
+			"\\(\\) ",
+			"hypot",
+			"if \\( ([^\\t]*) \\):",
+			"if \\( ([^\\t]*) \\) :",
+			"if \\( ([^\\t]*) \\):",
+			"if \\( ([^\\t]*)\\):",
+			"(^\\s*)if \\( ([^\\t]*)\\):",
+			"^\\s*[if] \\( [^\\t]*\\)",
+			"if \\( ",
+			"destroy",
+			"Sprite.enemies",
+			"Sprite.player",
+			"def p",
+			"main",
+			"sprite",
+			"\\|",
+			"|",
+			"100000",
+			"\\S=\\S",
+			" health = ",
+			" fire_period = ",
+			"fire_period = ",
+			"acceleration_vector = ",
+			" angle = ",
+			"name = ",
+			"velocity_vector = ",
+			"radii_vector = ",
+			"add = ",
+			"menu = ",
+			"file = ",
+			"command = ",
+			"label = ",
+			"~",
+			"^([\\w\\W])*\\(\\=([\\w\\W])*$",
+			"^([\\w\\W])*\\($",
+			"^([\\w\\W])*\\(\\=$",
+			"^\\#",
+			"$\\#",
+			"$([\\b\\B])*\\(",
+			"$(\\S)*\\(",
+			" = ",
+			"\t\t\t",
+			"()",
+			"()\n",
+			"text",
+			"pos",
+			")\n",
+			"@1",
+			"get_s",
+			"get",
+			"1@",
+			"[^e]move",
+			"move",
+			"get_size",
+			"price",
+			"\"",
+			">\"",
+			"\"<",
+			"-",
+			"―",
+			"\"",
+			"―",
+			"--",
+			"sprite_types",
+			"Sprite.sprite_types",
+			"Shell.shell_types",
+			"shell_types",
+			"##",
+			"  ",
+			"   ",
+			"    ",
+			"  ",
+			"    ",
+			"(player",
+			"[^.\\s\\'\\\"]player",
+			"[^.]player",
+			"player",
+			"    "
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"sprite",
+			"\"",
+			"\"max_speed\"",
+			"\"image_path\"",
+			"_IMAGE_PATH\\1",
+			"\"red_rocket\"",
+			"\"green_rocket\"",
+			"\"fire_period\"",
+			"\"max_speed\"",
+			"\"max_acceleration\"",
+			"",
+			"is_visible",
+			"SEP",
+			"to_next",
+			"continue",
+			"def destroy",
+			"def __del__",
+			"self._items",
+			"self._path",
+			"self._path\\1",
+			"self._name\\1",
+			"self._name",
+			"self._path",
+			"\\1 \\2 \\3",
+			"if \\1:",
+			"if \\1",
+			"\\1if \\2:",
+			"Ship.enemies",
+			"Ship.player",
+			"ship",
+			" health=",
+			" fire_period=",
+			"fire_period=",
+			"acceleration_vector=",
+			" angle=",
+			"name=",
+			"velocity_vector=",
+			"radii_vector=",
+			"add=",
+			"menu=",
+			"file=",
+			"command=",
+			"label=",
+			"=",
+			"            ",
+			"'",
+			">'",
+			"'<",
+			"—",
+			"-",
+			"1",
+			"-",
+			"―",
+			"sprite_dict",
+			"Sprite.sprite_dict",
+			"shell_dict",
+			"",
+			"\\t",
+			"Sprite.player",
+			"\\t",
+			"    ",
+			"\\s\\s\\s\\s",
+			"\\t",
+			"    ",
+			"\\t",
+			"'\\t",
+			"'\\t'",
+			"____",
+			"Sprite.enemies",
+			"—―",
+			"op",
+			"run_game",
+			"directory",
+			"",
+			"text",
+			"generate_array",
+			"generate_row",
+			"lib",
+			"file_menu",
+			"d = ",
+			"l = ",
+			"\\S = \\S",
+			" ",
+			" = ",
+			"max speed",
+			"Shell.shell_types",
+			"Local.local_time",
+			"space_game.local_time",
+			"local_time",
+			"Translator.local_time",
+			"self.shell_type",
+			"shell_type",
+			"'max speed'",
+			"camera_position",
+			"Star.stars",
+			"Shell.shells",
+			"rectangle",
+			"display_surface",
+			" << ",
+			"FPS",
+			"//",
+			"/",
+			"PROTRACTION",
+			"protraction",
+			"tick(protraction)",
+			"local_time"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/home/vanfed/Documents/Haskell/Kleisli.hs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1402,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1262,
+								1262
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SublimeHaskell/Syntaxes/Haskell-SublimeHaskell.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/home/vanfed/Documents/Haskell/Exercise.hs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1028,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								472,
+								472
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SublimeHaskell/Syntaxes/Haskell-SublimeHaskell.tmLanguage",
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/home/vanfed/Documents/Python/universal/filesystem.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 38338,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								35733,
+								35733
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 486.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 27.0
+	},
+	"input":
+	{
+		"height": 40.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.sublime_haskell_output_panel":
+	{
+		"height": 180.0
+	},
+	"pinned_build_system": "Packages/User/Python3.sublime-build",
+	"project": "space_game.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 124.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
